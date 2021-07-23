@@ -46,24 +46,21 @@ class TicTacToe
           end  
 
           def current_player
-            @board[0] = "O" 
+           if turn_count.even? 
+            "X" 
+           else 
+            "O"
+           end 
+           
+            
             
           end  
-
-
-
-
-   
-    
-                         
-    
-
-
-
-
-
+          
 
 
 
 
 end   
+game = ["X", "O", "O", " ", " ", " ", "X", " ", " "]
+new_game =TicTacToe.new(game)
+#binding.pry
