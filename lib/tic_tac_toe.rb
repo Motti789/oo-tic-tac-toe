@@ -28,10 +28,9 @@ class TicTacToe
         input.to_i - 1
         end    
 
-        def move(index, token = x)
-            @board[0] = "X"
-            @board[4] = "O"
-        end
+        def move(index, token)
+            @board[index] = token
+          end
 
         def position_taken?(index)
         @board[index] != " "
@@ -45,16 +44,78 @@ class TicTacToe
             @board.count { |i| i != " "}
           end  
 
-          def current_player
-           if turn_count.even? 
-            "X" 
-           else 
-            "O"
-           end 
+        def current_player
+            if turn_count.even? 
+             "X" 
+            else 
+             "O"
+            end 
+        end    
+        
+        
+
+           def turn
+             puts "Please enter 1-9"
+             input = gets.strip
+              index = input_to_index(input)
+              if valid_move?(index)
+                token = current_player
+                move(index, token)
+              else 
+                turn
+              end
+              display_board
+            end 
+
+            def won?
+                WIN_COMBINATIONS.any? do |combo|
+                  if position_taken?(combo[0]) && @board[combo[0]] == @board[combo[1]] && @board[combo[1]] == @board[combo[2]]
+                    return combo
+                  end
+                end
+            end       
+
+              def full?
+                @board.all? do |x| x != " "
+                end   
+              end      
+
+              def draw?
+                full? && !won?
+              end
+
+              def over?
+               draw? || won?
+              end 
+
+              def winner
+                if combo = won?
+                  @board[combo[0]]
+                end
+              end 
+
+              def play
+                turn until over?
+                if winner
+                    puts "Congratulations #{winner}!"                    
+                else 
+                    draw?
+                    puts "Cat's Game!"
+                end        
+
+              end    
+                
+              
+
+
+
+
+
+
            
             
             
-          end  
+           
           
 
 
